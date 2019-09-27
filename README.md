@@ -31,4 +31,4 @@
   + Проверка на валидность/попытку передачи товара 
   
 ### :bar_chart: UML модель :bar_chart:
-https://i.imgur.com/RcHi689.png
+[UML_SCHEME](https://i.imgur.com/RcHi689.png)
