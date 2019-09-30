@@ -1,0 +1,19 @@
+body,html{
+    min-height: 100%;
+}
+.bgPadding,.bgColor{
+    margin: 0 auto;
+    padding: 10px 0 16px;
+    z-index: inherit;
+}
+
+.nav-wrapper{
+    background-color: black
+
+}
+.brand-logo{
+    left: 16%
+}
+.card.large{
+    border: 1px;
+}
