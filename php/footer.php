@@ -13,10 +13,10 @@ require ('php/database.php');
                 <h5 class="white-text">Links</h5>
                 <ul>
                 <?php 
-                      $kask=$yhendus->prepare("SELECT product_name FROM products ");
-                      $kask->bind_result($product_name);
-                      $kask->execute();
-                      while($kask->fetch()):
+                      $cmd=$sql_connection->prepare("SELECT product_name FROM products ");
+                      $cmd->bind_result($product_name);
+                      $cmd->execute();
+                      while($cmd->fetch()):
                  ?>
                   <li><a class="grey-text text-lighten-3" href="#!"><?php echo $product_name ?> - Qwerty</a></li>
                   <?php 
