@@ -5,7 +5,12 @@ require ('php/database.php');
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php require('php/head_links.php') ?>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/q.ico" />
     <title>Qwerty MultiHack - Home Page</title>
 </head>
 <body>
@@ -14,26 +19,26 @@ require ('php/database.php');
         <div class="row">
                 <div class="bgPadding">
                     <div class="parallax-container">
-                        <div class="parallax"><img class="responsive-img" src="images/parralax/csgo.png"  alt=""></div>
+                        <div class="parallax"><img class="responsive-img" src="images/csgo_parralax.jpg"  alt=""></div>
                     </div>
-                        <div class="section">
+                        <div class="section white">
                             <div class="row container">
                                 <h2 class="header">Qwerty Multihack</h2>
-                                <p class="text-darken-3 lighten-3 text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quisquam molestiae eos voluptas quaerat eaque fugiat ex impedit, voluptatibus quae facilis necessitatibus enim blanditiis sapiente architecto accusamus, vel unde ipsam!</p>
+                                <p class="grey-text text-darken-3 lighten-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quisquam molestiae eos voluptas quaerat eaque fugiat ex impedit, voluptatibus quae facilis necessitatibus enim blanditiis sapiente architecto accusamus, vel unde ipsam!</p>
                             </div>
                         </div>
                         <div class="parallax-container">
-                            <div class="parallax"><img src="images/parralax/fortnite_parralax.jpg"></div>
+                            <div class="parallax"><img src="images/fortnite_parralax.jpg"></div>
                         </div>
-                        <div class="section">
+                        <div class="section white">
                             <div class="row container">
                                 <h2 class="header">Our available products</h2>
                                 <div class="row">
                                     <?php 
-                                        $kask=$yhendus->prepare("SELECT id, product_name,price,img,description FROM products ");
-                                        $kask->bind_result($id, $product_name, $price, $img,$description);
-                                        $kask->execute();
-                                        while($kask->fetch()):
+                                        $cmd=$sql_connection->prepare("SELECT id, product_name,price,img,description FROM products ");
+                                        $cmd->bind_result($id, $product_name, $price, $img,$description);
+                                        $cmd->execute();
+                                        while($cmd->fetch()):
                                         ?>
                                                 
                                             <div class="col s6 m6">
@@ -59,16 +64,11 @@ require ('php/database.php');
                         <div class="parallax-container">
                             <div class="parallax"><img src="images/parralax/pubg.jpg"></div>
                         </div>
-                        <div class="section">
-                            <div class="row container">
-                                <h2 class="header">Qwerty Multihack</h2>
-                                <p class="text-darken-3 lighten-3 text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quisquam molestiae eos voluptas quaerat eaque fugiat ex impedit, voluptatibus quae facilis necessitatibus enim blanditiis sapiente architecto accusamus, vel unde ipsam!</p>
-                            </div>
-                        </div>
                 </div>
          </div> 
     </div>
-    <?php include('php/footer.php'); ?> 
+
+
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/script.js"></script>
