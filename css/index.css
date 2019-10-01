@@ -1,19 +1,49 @@
-body,html{
-    min-height: 100%;
+body{
+    
+    
+    background: #272d37;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-.bgPadding,.bgColor{
+
+.bgPadding{
+    max-width: 1000px;
     margin: 0 auto;
+    background: #272d37;
     padding: 10px 0 16px;
-    z-index: inherit;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-filter: blur(0px);
+    
+    
 }
+
 
 .nav-wrapper{
-    background-color: black
+    background: #38404e;
+    
+}
+.right.hide-on-med-and-down{
+    margin-right: 23%;
+}
 
+.page-footer{
+    background-color: black
 }
 .brand-logo{
-    left: 16%
+    left: 23.5%;
+    top: 10%;
 }
 .card.large{
     border: 1px;
+}
+.section,.text{
+    background: #272d37;
+    color: white;
+}
+p{
+    color: black
 }
