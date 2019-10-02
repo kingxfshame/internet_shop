@@ -52,7 +52,6 @@ require ('php/database.php');
                                 $cmd->execute();
                                 while($cmd->fetch()):
                             ?>
-                            
                             <div class="col s6 m6">
                                 <div class="card">
                                     <div class="card-image">
@@ -74,40 +73,27 @@ require ('php/database.php');
                     </div>
                 </div>
                 <div class="parallax-container">
-                    <div class="parallax">
-                        <img src="images/parralax/pubg.jpg">
+                    <div class="parallax"><img src="images/parralax/pubg.jpg"></div>
+                </div>
+                <div class="section">
+                    <div class="row container">
+                        <h2 class="header">Qwerty Multihack</h2>
+                        <p class="text-darken-3 lighten-3 text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quisquam molestiae eos voluptas quaerat eaque fugiat ex impedit, voluptatibus quae facilis necessitatibus enim blanditiis sapiente architecto accusamus, vel unde ipsam!</p>
                     </div>
                 </div>
-
-
-                <div class="section">
-                    <div class="prew">
-                        <h3 style="text-align:center;">Example</h3>
-                        <div class="border-b-gradient"></div>
-                        <div class="row">
-                                <div class="header_left">
-                                    <h5>Without Cheats</h5>
-                                </div>
-                                <div class="header_right">
-                                    <h5>With Cheats</h5>
-                                </div>
-                            </div>
-                            <div id="container1" class="twentytwenty-wrapper twentytwenty-horizontal">
-                            
-                                <img src="images/after_before/csgo_after.jpg" alt="">
-                                <img src="images/after_before/csgo_before.jpg" alt="">
-                            </div>
-                        </div>
-                    </div>
-                
-
-
-                
             </div>
         </div>
     </div>
     <?php include('php/footer.php'); ?>
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.sidenav').sidenav();
+        $('.parallax').parallax();
+    });
+    </script>
 </body>
 
 </html>

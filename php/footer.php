@@ -33,19 +33,3 @@ require ('php/database.php');
             </div>
           </div>
 </footer>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="js/jquery.event.move.js" type="text/javascript"></script>
-    <script src="js/jquery.twentytwenty.js" type="text/javascript"></script>
-    <script src="js/script.js"></script>
-    <script>
-    $(document).ready(function() {
-        $('.sidenav').sidenav();
-        $('.parallax').parallax();
-    });
-    $("#container1").twentytwenty({
-      before_label: 'WithOut',
-      after_label: 'With',
-      no_overlay: true,
-    });
-    </script>
