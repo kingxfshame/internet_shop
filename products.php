@@ -1,4 +1,4 @@
-
+<?php require('php/database.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,23 +7,32 @@
 </head>
 <body>
     <?php require('php/navbar.php') ?>
-
+    <?php 
+            $connect=$sql_connection->prepare("SELECT id, product_name,price,img,description FROM products");
+            $connect->bind_result($id, $product_name,$price ,$img, $description);
+            $connect->execute();
+            while($connect ->fetch()):
+    ?>
     <div class="container row product">
         <a href="#">
             <div class="product_game col s6">
-                <h1 class="product_title">CS:GO</h1>
+                <h1 class="product_title"><?php echo $product_name ?> - Qwerty</h1>
                 <ul class="product_desc">
-                    <li>Wallhack</li>
-                    <li>Wallhack</li>
-                    <li>Wallhack</li>
+                   <p class="flow-text"><?php echo $description ?></p> 
                 </ul>
                 <!-- <img src="images/parralax/csgo.png" class="product_image"> -->
             </div>
             <div class="product_cheat col s6">
-                <img src="images/parralax/pubg.jpg" class="cheat_image">
+                <img src="images/products/<?php echo $img ?>" class="cheat_image">
             </div>
         </a>
     </div>
+
+    <?php 
+        endwhile;
+    ?>
+
+    
 
     <?php require('php/footer.php') ?>
 </body>
