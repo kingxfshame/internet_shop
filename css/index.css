@@ -21,6 +21,58 @@ body{
     
 }
 
+.product
+{
+    margin-top: 3%;
+}
+
+.product_game
+{
+    position: relative;
+    height: 400px;
+    width: 640px;
+    background-color: rgb(101, 108, 179);
+}
+
+.product_image
+{
+    height: 500px;
+    width: 640px;
+}
+
+.product_title
+{
+    color: white;
+    position: absolute;
+    top: 20px;
+    left: 70px;
+}
+
+.product_desc
+{
+    color: white;
+    font-size: 2rem;
+    position: absolute;
+    top: 170px;
+    left: 70px;
+}
+
+.product_cheat
+{
+    height: 400px;
+    width: 640px;
+}
+
+.cheat_image
+{
+    height: 400px;
+    width: 640px;
+}
+
+.row .col {
+    padding: 0;
+}
+
 
 .nav-wrapper{
     background: #38404e;
