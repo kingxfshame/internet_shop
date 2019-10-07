@@ -243,3 +243,9 @@ i.large {
     animation-name: pulse-animation;
     z-index: -1;
 }
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }
