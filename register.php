@@ -1,4 +1,8 @@
 <?php 
+<<<<<<< HEAD
+=======
+session_start();
+>>>>>>> 3b80066a1e99cbd1f6686f1a50842b2f9fe11257
 $_SESSION['message'] = '';
 require('php/database.php');
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -28,7 +32,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
             else{
                 $_SESSION['message'] = "Username already exists";
+<<<<<<< HEAD
             } 
+=======
+            }
+>>>>>>> 3b80066a1e99cbd1f6686f1a50842b2f9fe11257
         }
 
     
@@ -53,7 +61,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <div class="container">
         <div class="row">
              <div class="col s12"><h2 class="header" style="text-align:center;color:white;">Register</h2></div>
+<<<<<<< HEAD
              <div class="col s4" style="margin-left:30%;margin-top:5%;margin-bottom:4.9%;">
+=======
+             <div class="col s4" style="margin-left:30%;margin-top:5%;margin-bottom:6.5%;">
+>>>>>>> 3b80066a1e99cbd1f6686f1a50842b2f9fe11257
                     <div class="card-content">
                         <div class="row">
                             <form id="task-form" class="form" action="register.php" method="post" enctype="multipart/form-data" autocomplete="off">
