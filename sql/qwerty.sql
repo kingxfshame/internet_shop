@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2019 at 04:45 PM
+-- Generation Time: Oct 07, 2019 at 11:59 AM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -33,6 +33,7 @@ CREATE TABLE `products` (
   `product_name` varchar(50) NOT NULL,
   `price` float NOT NULL,
   `img` text NOT NULL,
+  `short_description` text NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -40,9 +41,24 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_name`, `price`, `img`, `description`) VALUES
-(1, 'CS GO', 13.45, 'csgo.jpg', 'Our CS:GO cheat is industry leading with the perfect combination of legit and rage features. Our developers have profound experience which allowed us to become the most popular CS:GO cheat on the market today.'),
-(2, 'Fortnite', 91.99, 'fortnite.jpg', 'There are a lot of Fortnite hacks online that promises cheat features such as infinite teleportation, V-Bucks and more.');
+INSERT INTO `products` (`id`, `product_name`, `price`, `img`, `short_description`, `description`) VALUES
+(1, 'CS GO', 13.45, 'csgo.jpg', 'Wallhack,Aimbot,Trigger', 'Our CS:GO cheat is industry leading with the perfect combination of legit and rage features. Our developers have profound experience which allowed us to become the most popular CS:GO cheat on the market today.'),
+(2, 'Fortnite', 91.99, 'fortnite.jpg', 'Wallhack,Aimbot,Trigger', 'There are a lot of Fortnite hacks online that promises cheat features such as infinite teleportation, V-Bucks and more.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `avatar_img` varchar(50) DEFAULT 'user.png',
+  `ssd` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
@@ -55,6 +71,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -63,6 +85,12 @@ ALTER TABLE `products`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

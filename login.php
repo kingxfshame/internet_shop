@@ -7,6 +7,7 @@
 <body>
     <?php require('php/navbar.php') ?>
         
+    
 
     <?php require('php/footer.php') ?>
 </body>
