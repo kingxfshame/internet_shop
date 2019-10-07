@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2019 at 04:45 PM
+-- Generation Time: Oct 07, 2019 at 10:58 AM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -33,6 +33,7 @@ CREATE TABLE `products` (
   `product_name` varchar(50) NOT NULL,
   `price` float NOT NULL,
   `img` text NOT NULL,
+  `short_description` text NOT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -40,9 +41,9 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `product_name`, `price`, `img`, `description`) VALUES
-(1, 'CS GO', 13.45, 'csgo.jpg', 'Our CS:GO cheat is industry leading with the perfect combination of legit and rage features. Our developers have profound experience which allowed us to become the most popular CS:GO cheat on the market today.'),
-(2, 'Fortnite', 91.99, 'fortnite.jpg', 'There are a lot of Fortnite hacks online that promises cheat features such as infinite teleportation, V-Bucks and more.');
+INSERT INTO `products` (`id`, `product_name`, `price`, `img`, `short_description`, `description`) VALUES
+(1, 'CS GO', 13.45, 'csgo.jpg', 'Wallhack,Aimbot,Trigger', 'Our CS:GO cheat is industry leading with the perfect combination of legit and rage features. Our developers have profound experience which allowed us to become the most popular CS:GO cheat on the market today.'),
+(2, 'Fortnite', 91.99, 'fortnite.jpg', 'Wallhack,Aimbot,Trigger', 'There are a lot of Fortnite hacks online that promises cheat features such as infinite teleportation, V-Bucks and more.');
 
 --
 -- Indexes for dumped tables
