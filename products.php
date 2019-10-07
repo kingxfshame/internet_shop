@@ -9,8 +9,8 @@
 <body>
     <?php require('php/navbar.php') ?>
     <?php 
-            $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products");
-            $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+            $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_desc,description,support FROM products");
+            $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description, $support);
             $connect->execute();
             while($connect ->fetch()):
             
@@ -29,10 +29,10 @@
                             echo '<br>';
                         }
                     ?>
-                    
                     </p> 
                 </ul>
                 <h3 class="product_price"><?php echo $price ?>€ for 30 day</h3>
+                <p class="product_support">Supported OS: <?php echo $support ?></p>
                 <!-- <img src="images/parralax/csgo.png" class="product_image"> -->
             </div>
             <div class="product_cheat col s6 m6">

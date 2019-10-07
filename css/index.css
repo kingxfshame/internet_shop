@@ -117,6 +117,14 @@ body{
     border-radius: 60px 0px 0px 60px;
 }
 
+.product .product_game .product_support
+{
+    color: rgb(184, 184, 184);
+    position: absolute;
+    top: 350px;
+    left: 180px;
+}
+
 .row .col {
     padding: 0;
 }
