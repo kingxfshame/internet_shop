@@ -13,7 +13,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $res_u = $sql_connection -> query($sql_username) or die ($sql_connection -> error());
         $res_e = $sql_connection -> query($sql_email) or die ($sql_connection -> error());
         if(mysqli_num_rows($res_u) > 0 || mysqli_num_rows($res_e) > 0){
-            $_SESSION['username'] = $username;
+            $sql=$sql_connection->prepare("SELECT id, email,username FROM users WHERE username='$email' OR email ='$email'");
+            $sql->bind_result($id, $email, $username);
+            $sql->execute();
+            while($sql -> fetch()){
+                $_SESSION['username'] = $username;
+            }
+
             header("location: ./");
         }
         else{
@@ -28,6 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="css/register.css"/>
     <?php require('php/head_links.php') ?>
     <title>Qwerty Multihack - Login</title>
 </head>
@@ -40,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
              <div class="col s4" style="margin-left:35%;margin-top:14%;margin-bottom:19.5%;">
                     <div class="card-content">
                         <div class="row">
-                            <form id="task-form" class="form" action="register.php" method="post" enctype="multipart/form-data" autocomplete="off">
+                            <form id="task-form" class="form" action="login.php" method="post" enctype="multipart/form-data" autocomplete="off">
                                 <?php 
                                     if($_SESSION['message'] == ''){
 
@@ -63,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                     <label for="password"><i class="material-icons">https</i> Password</label>
                                 </div>
 
-                                <input type="submit" value="Sign Up" class="btn">
+                                <input type="submit" value="Log in" class="btn">
                             </form>
                         </div>
                     </div>
