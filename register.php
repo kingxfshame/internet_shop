@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $_SESSION['message'] = '';
 require('php/database.php');
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -11,12 +12,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $sql_username = "SELECT * FROM users WHERE username ='$username'";
         $sql_email = "SELECT * FROM users WHERE email ='$email'";
         
-        $res_u = $sql_connection -> query($sql_username) or die ($sql_connection -> error());
-        $res_e = $sql_connection -> query($sql_email) or die ($sql_connection -> error());
-        if(mysqli_num_rows($res_u) > 1){
+        $res_u = $sql_connection -> query($sql_username) or die (mysqli_error($sql_connection));
+        $res_e = $sql_connection -> query($sql_email) or die (mysqli_error($sql_connection));
+        
+        if(mysqli_num_rows($res_u) > 0){
             $_SESSION['message'] = "Username already exists";
         }
-        else if(mysqli_num_rows($res_e) > 1){
+        else if(mysqli_num_rows($res_e) > 0){
             $_SESSION['message'] = "Email already exists";
         }
         else{
