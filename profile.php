@@ -20,31 +20,33 @@ require('php/database.php');
             while($connect ->fetch()):
             
     ?>
-    <div>
-        <div>
-            <img class="responsive-img" src="images/avatars/<?php echo $img ?>" alt="profile_image">
-        </div>
-        <div>
-            <div>
-                <div>
-                    <h3></h3>
-                    <h3></h3>
-                    <input type="text">
-                    <input type="text">
+    <div class="row container profile_content">
+        <div class="profile_top">
+            <div class="profile_img">
+                <img class="responsive-img profile_img" src="images/avatars/<?php echo $img ?>" alt="profile_image">
+            </div>
+            <div class="profile_data">
+                <div class="profile_data_">
+                    <h5>Email</h5>
+                    <h5>UserName</h5>
+                    <div class="profile_input">
+                        <input type="text">
+                        <input type="text">
+                    </div>
                 </div>
             </div>
+        </div>
+        <?php 
+        endwhile;
+        ?>
+        <div class="profile_products">
             <div>
                 <h3></h3>
-                <div>
-                </div>
+                <div> <img class="profile_product_img" src="images/products/csgo.jpg"/> </div>
                 <h3></h3>
             </div>
         </div>
     </div>
-    <?php 
-        endwhile;
-    ?>
     <?php require('php/footer.php') ?>
 </body>
-
 </html>
