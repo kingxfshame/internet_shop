@@ -12,6 +12,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION['game_id'] = $dannie[$i];
         $_SESSION['buy_days'] = $dannie[$ii + 1];
     }
+    header('location: orderconfirm');
 }
 
 ?>
@@ -62,8 +63,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <div class="modal-content">
             <h4><?php echo $product_name ?> - Qwerty</h4>
             <p><?php echo $description ?></p>
-            <h5 class="product_price" style="text-align:center;"><?php echo $price * 7 ?>€ for 7 days | <?php echo $price * 30 ?>€ for 1 day | <?php echo $price * 360 ?>€ for 360 days</h5>
-            <form id="task-form" class="form" action="products.php" method="post" enctype="multipart/form-data" autocomplete="off">
+            <h5 class="product_price" style="text-align:center;"><?php echo $price * 7 ?>€ for 7 days | <?php echo $price * 30 ?>€ for 30 days | <?php echo $price * 360 ?>€ for 360 days</h5>
+            <form id="task-form" class="form" action="products" method="post" enctype="multipart/form-data" autocomplete="off">
             <div class="option-group">
                 
                 <div class="option-container">

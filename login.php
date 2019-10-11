@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
              <div class="col s4" style="margin-left:35%;margin-top:14%;margin-bottom:19.5%;">
                     <div class="card-content">
                         <div class="row">
-                            <form id="task-form" class="form" action="login.php" method="post" enctype="multipart/form-data" autocomplete="off">
+                            <form id="task-form" class="form" action="login" method="post" enctype="multipart/form-data" autocomplete="off">
                                 <?php 
                                     if($_SESSION['message'] == ''){
 
