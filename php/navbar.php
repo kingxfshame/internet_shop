@@ -12,14 +12,14 @@ if (session_status() == PHP_SESSION_NONE) {
             if($_SESSION['username'] == "")
             {
               ?>
-                <li><a href="login.php">Sign In</a></li>
-                <li><a href="register.php">Sign Up</a></li>
+                <li><a href="login">Sign In</a></li>
+                <li><a href="register">Sign Up</a></li>
               <?php 
             }
             else{
               ?>
-                <li><a href="profile.php"><?= $_SESSION['username'] ?></a></li>
-                <li><a href="php/logout.php">Log out</a></li>
+                <li><a href="profile"><?= $_SESSION['username'] ?></a></li>
+                <li><a href="php/logout">Log out</a></li>
               <?php 
             }
             ?>
@@ -28,12 +28,12 @@ if (session_status() == PHP_SESSION_NONE) {
           }
           else{
             ?>
-                <li><a href="login.php">Sign In</a></li>
-                <li><a href="register.php">Sign Up</a></li>
+                <li><a href="login">Sign In</a></li>
+                <li><a href="register">Sign Up</a></li>
             <?php 
           }
         ?>
-        <li><a href="products.php" class="waves-effect waves-light btn pulse"> Products</a></li>
+        <li><a href="products" class="waves-effect waves-light btn pulse"> Products</a></li>
       </ul>
     </div>
   </nav>
