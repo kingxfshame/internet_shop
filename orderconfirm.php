@@ -33,21 +33,28 @@ $timework = date("Y-m-d",strtotime($currentdate. '+ '.$days.' days'));
                     <div class="row container">
                         <div class="content">
                             <div class="content_title">
-                                <h1><?= $product_name; ?> - Qwerty Purchase</h1>
+                                <h1>Confirm order</h1>
                             </div>
                             <div class="content_img col">
-                                <img class="responsive-img" src="images/products/<?php echo $img ?>" alt="profile_image" style="height:35vh;">
+                                <img class="responsive-img" src="images/products/<?php echo $img ?>" alt="profile_image" style="height:40vh;">
                             </div>
 
                             <div class="content_content">
-                                <h4>Information About Days</h4>
+                                <h4>Purchase information</h4>
                                 <br>
-                                <h5>Number of Days: <?= $days?></h5>
+                                <h5>Subscription time: <?= $days?></h5>
                                 <h5><?php echo 'Active: '.$currentdate.' - '. $timework?></h5>
                                 <br>
-                                <h4>Information About Price</h4>
-                                <br>
-                                <h5><?php echo 'For '.$days.' days: '.$price * $days .' €'?></h5>
+                                <h5><?php echo 'Price for '.$days.' days: '.$price * $days .' €'?></h5>
+                            </div>
+                            <div class="content_buy">
+                                <a href="#">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Purchase Now!
+                                </a>
                             </div>
                         </div>
                     </div>
