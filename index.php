@@ -12,7 +12,7 @@ require ('php/database.php');
 
 <body>
     <?php include('php/navbar.php'); ?>
-    <div class="parallax-container">
+    <div class="parallax-container pcs">
         <div class="slider">
             <ul class="slides">
                 <li>
@@ -38,10 +38,10 @@ require ('php/database.php');
                         <p class="text-darken-3 lighten-3 text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nesciunt quisquam molestiae eos voluptas quaerat eaque fugiat ex impedit, voluptatibus quae facilis necessitatibus enim blanditiis sapiente architecto accusamus, vel unde ipsam!</p>
                     </div>
                 </div>
-                <div class="parallax-container">
+                <div class="parallax-container pc pcs">
                     <div class="parallax"><img src="images/parralax/fortnite_parralax.jpg"></div>
                 </div>
-                <div class="section">
+                <div class="section pcs">
                     <div class="row container">
                         <h2 class="header" style="text-align:center;">Why choose us?</h2>
                             <div class="col s4 m4">
@@ -69,7 +69,7 @@ require ('php/database.php');
                 </div>
 
 
-                <div class="parallax-container">
+                <div class="parallax-container pc pcs">
                     <div class="parallax">
                         <img src="images/parralax/pubg.jpg">
                     </div>

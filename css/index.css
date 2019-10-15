@@ -6,6 +6,17 @@ body{
     width: 100%; margin: auto;
 }
 
+.pcs
+{
+    zoom: 80%;
+}
+
+.pc
+{
+    width: 1350px;
+    margin: auto;
+}
+
 .bgPadding{
     max-width: 1000px;
     margin: 0 auto;
@@ -22,12 +33,13 @@ body{
 
 .product
 {
+    zoom: 80%;
     margin-top: 3%;
 }
 
 .z-depth-5, .modal {
     -webkit-box-shadow: 0 24px 38px 3px rgba(0,0,0,0.14), 0 9px 46px 8px rgba(0,0,0,0.12), 0 11px 15px -7px rgba(0,0,0,0.2);
-    box-shadow: 0 24px 38px 3px rgba(255, 255, 255, 0.14), 0 9px 46px 8px rgba(47, 110, 165, 0.12), 0 11px 15px -7px rgba(47, 110, 165, 0.2);
+    box-shadow: 0 24px 38px 3px rgba(47, 110, 165, 0.14), 0 9px 46px 8px rgba(47, 110, 165, 0.12), 0 11px 15px -7px rgba(47, 110, 165, 0.2);
     border-radius: 50px 0px 0px 50px;
     transition: 0.3s;
 }
@@ -196,6 +208,10 @@ i.large {
     cursor: pointer;
 }
 
+.btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus {
+    background-color:rgb(48, 163, 230);
+}
+
 .btn, .btn-large, .btn-small {
     text-decoration: none;
     text-decoration-line: none;
@@ -254,6 +270,7 @@ i.large {
 .profile_content
 {
     margin-top: 3%;
+    color: white;
 }
 
 .profile_top
@@ -261,11 +278,66 @@ i.large {
     padding-left: 300px;
 }
 
-.profile_img
-{
+.profile_img {
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 1px 1px 15px -5px black;
+    transition: all .3s ease
+}
+
+.profile_img:hover {
+    transform: scale(1.05);
+    cursor: pointer
+}
+
+.profile_img:hover .profile-pic {
+    opacity: .5
+}
+
+.profile_img .profile-pic {
+    height: 100%;
+    width: 100%;
+    transition: all .3s ease
+}
+
+.profile_img .profile-pic:after {
+    font-family: FontAwesome;
+    content: "\f007";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    font-size: 190px;
+    background: #ecf0f1;
+    color: #34495e;
+    text-align: center
+}
+
+.profile_img .upload-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%
+}
+
+.profile_img .upload-button .fa-arrow-circle-up {
+    position: absolute;
+    font-size: 270px;
+    top: -5px;
+    left: -8px;
+    text-align: center;
+    opacity: 0;
+    transition: all .3s ease;
+    color: #ffffff
+}
+
+.profile_img .upload-button:hover .fa-arrow-circle-up {
+    opacity: .9
 }
 
 .profile_data
@@ -277,15 +349,114 @@ i.large {
 
 .profile_data_
 {  
-    padding-top: 50px;
+    padding-top: 30px;
 }
 
 .profile_input
 {
+    color: white;
+    placeholder:;
     width: 200px;
+}
+
+#password, #password2
+{
+    color: white;
+}
+
+.profile_input::placeholder 
+{
+    color: red;
+}
+
+.profile_line
+{
+    margin-left: 150px;
+    width: 980px;
+    border-bottom: 3px solid rgb(56,64,78);
+    position: absolute;
+}
+
+.profile_products
+{
+    margin-top: 70px;
+    margin-bottom: 90px;
+    color: white;
+    display: flex;
+    flex-direction:row;
+}
+
+.profile_product
+{
+    border: solid rgb(0,230,118) 3px;
+    background-color: rgba(47, 110, 165, 0.14);
+    width: 230px;
+    height: 300px;
+    margin-left: 11.5%;
+    display: table-cell;
+    box-shadow: 0 10px 38px 3px rgba(0,230,118, 0.12), 0 9px 46px 8px rgba(0,230,118, 0.10), 0 11px 15px -7px rgba(0,230,118, 0.2);
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.profile_product:hover
+{
+    border-radius: 35px;
+    border: solid rgb(0,240, 124) 3px;
+    box-shadow: 0 10px 38px 3px rgba(0, 240, 124, 0.20), 0 9px 46px 8px rgba(0,240, 124, 0.15), 0 11px 15px -7px rgba(0,240, 124, 0.2);
+}
+
+.profile_product_negative
+{
+    border: solid rgb(255,23,68) 3px;
+    background-color: rgba(47, 110, 165, 0.14);
+    width: 230px;
+    height: 300px;
+    margin-left: 11.5%;
+    display: table-cell;
+    box-shadow: 0 10px 38px 3px rgba(255,23,68, 0.12), 0 9px 46px 8px rgba(255,23,68, 0.10), 0 11px 15px -7px rgba(255,23,68, 0.2);
+    border-radius: 30px;
+}
+
+.profile_product_title
+{
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    width: 230px;
+    height: 40px;
 }
 
 .profile_product_img
 {
-    
+    width: 224px;
+    height: 150px;
+}
+
+.profile_product_status
+{
+    color: white;
+    position: absolute;
+    padding-left: 62.5px;
+}
+
+.profile_product_dates
+{
+    padding-right: 10px;
+}
+
+.profile_product_date
+{
+    font-size: 15px;
+    text-align: center;
+    margin-top: 50px;
+    color: white;
+}
+
+.profile_product_date2
+{
+    text-align: left;
+    font-size: 10px;
+    margin-top: 56px;
+    color: white;
 }
