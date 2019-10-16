@@ -18,6 +18,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $sql->execute();
             while($sql -> fetch()){
                 $_SESSION['username'] = $username;
+                $_SESSION['user_id'] = $id;
             }
 
             header("location: ./");

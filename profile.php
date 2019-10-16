@@ -1,6 +1,9 @@
 <?php 
 session_start();
 $user_name = $_SESSION['username'];
+$user_id = 0;
+if(empty($_SESSION['user_id'])) $user_id = 0;
+else $user_id = $_SESSION['user_id'];
 
 require('php/database.php');
 ?>
@@ -46,22 +49,39 @@ require('php/database.php');
         <div class="profile_line"></div>
         <?php 
         endwhile;
-        ?>
+            $connect=$sql_connection->prepare("SELECT id, user_id, products_id,date_buy,date_end,status,banned,banned_description,ssd FROM soft WHERE user_id='$user_id'");
+            $connect->bind_result($id, $user_id_second, $products_id,$date_buy,$data_end,$status,$banned,$banned_description,$ssd);
+            $connect->execute();
+            while($connect ->fetch()):
+            
+    ?>
         <div class="profile_products">
+        <?php 
+                if (!$connect) {
+                    exit('SQL Error: ' . $connect->errno . ' ' . $connect->error);
+                    }
+                $connect=$sql_connection->prepare("SELECT id, product_name,img FROM products WHERE id='$products_id'");
+                $connect->bind_result($prod_id, $name , $img);
+                $connect->execute();
+                while($connect ->fetch()):
+        
+        ?>
             <a class="modal-trigger profile_product" href="#modal1">
                 <div class="">
-                    <h5 class="profile_product_title">CS:GO Qwerty</h5>
-                    <div> <img class="profile_product_img" src="images/products/csgo.jpg"/> </div>
+                    <h5 class="profile_product_title"><?php echo $name; ?> -  Qwerty</h5>
+                    <div> <img class="profile_product_img" src="images/products/<?php echo $img; ?>"/> </div>
                     <div>
-                        <h6 class="profile_product_status">Status: Active</h6>
+                        <h6 class="profile_product_status">Status: <?php echo $status; ?></h6>
                     </div>
+                    <?php 
+                    ?>
                     <div class="profile_product_dates">
                         <p class="profile_product_date col s6">30 days left</p>
-                        <p class="profile_product_date2 col s6">11.09.2019 - 11.10.2019</p>
+                        <p class="profile_product_date2 col s6"><?php echo $date_buy.' - '. $data_end;?></p>
                     </div>
                 </div>
             </a>
-
+            
             <div id="modal1" class="modal">
                 <div class="modal-content">
                     
@@ -70,7 +90,11 @@ require('php/database.php');
                     <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
                 </div>
             </div>
+            <?php endwhile; ?>
         </div>
+        <?php 
+        endwhile;
+        ?>
     </div>
     <?php require('php/footer.php') ?>
 </body>
