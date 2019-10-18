@@ -18,7 +18,7 @@ require ('php/database.php');
                       $cmd->execute();
                       while($cmd->fetch()):
                  ?>
-                  <li><a class="grey-text text-lighten-3" href="#!"><?php echo $product_name ?> - Qwerty</a></li>
+                  <li><a class="grey-text text-lighten-3" href="products"><?php echo $product_name ?> - Qwerty</a></li>
                   <?php 
                   endwhile;
                   ?>

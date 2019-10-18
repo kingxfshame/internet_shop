@@ -1,3 +1,6 @@
+body{
+    overflow: hidden;
+}
 input, select, textarea{
     color: white;
 }
@@ -42,8 +45,9 @@ footer{
     overflow: hidden;
 }
 .content_buy{
-    margin-left: 470px;
-    margin-top: 11%;
+    margin-left: 47vh;
+    margin-top: 13vh;
+
 }
 .content_buy a:before{
     position: absolute;

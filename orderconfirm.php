@@ -12,13 +12,11 @@ $currentdate = date("Y-m-d");
 $timework = date("Y-m-d",strtotime($currentdate. '+ '.$days.' days'));
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $sql_userid_check = "SELECT * FROM soft WHERE user_id ='$user_id'";
-    $sql_gamecheck = "SELECT * FROM soft WHERE products_id ='$game_id'";
+    $sql_userid_check = "SELECT * FROM soft WHERE user_id ='$user_id' AND products_id ='$game_id'";
 
     $res_u = $sql_connection -> query($sql_userid_check) or die (mysqli_error($sql_connection));
-    $res_e = $sql_connection -> query($sql_gamecheck) or die (mysqli_error($sql_connection));
 
-        if(mysqli_num_rows($res_u) > 0 && mysqli_num_rows($res_e) > 0){
+        if(mysqli_num_rows($res_u) > 0){
 
         }
         else{

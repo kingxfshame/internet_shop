@@ -44,21 +44,21 @@ require ('php/database.php');
                 <div class="section pcs">
                     <div class="row container">
                         <h2 class="header" style="text-align:center;">Why choose us?</h2>
-                            <div class="col s4 m12">
+                            <div class="col s4 m4">
                                 <div class="center promo">
                                 <i class="large material-icons">people</i>
                                 <h5>10,000 satisfied users</h5>
                                 </div>
                             </div>
 
-                            <div class="col s4 m12">
+                            <div class="col s4 m4">
                                 <div class="center promo">
                                     <i class="large material-icons">local_atm</i>
                                     <h5>Affordable and pleasant prices</h5>
                                 </div>
                             </div>
 
-                            <div class="col s4 m12">
+                            <div class="col s4 m4">
                                 <div class="center promo">
                                     <i class="large material-icons">security</i>
                                     <h5>Strong account protection</h5>
