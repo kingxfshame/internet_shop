@@ -460,3 +460,22 @@ i.large {
     margin-top: 56px;
     color: white;
 }
+
+.admin_users_table
+{
+
+    width: 1000px;
+    color: white;
+    padding: auto;
+}
+
+.sidenav
+{
+    color: white;
+    background-color: #38404e;
+    top: auto;
+}
+
+.sidenav li>a {
+    color: rgb(255, 255, 255);
+}

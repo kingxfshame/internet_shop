@@ -1,8 +1,30 @@
 <?php 
 session_start();
 $user_name = $_SESSION['username'];
-
+$user_id = 0;
+if(empty($_SESSION['user_id'])) $user_id = 0;
+else $user_id = $_SESSION['user_id'];
 require('php/database.php');
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    // paroli sovpadayt
+        if($_POST['password'] == $_POST['password2']){
+            $password = md5($_POST['password']);
+        
+                $sql = "UPDATE users set password = '$password' WHERE id='$user_id'";
+                if($sql_connection ->query($sql) === true){
+                    $_SESSION['message'] = 'Password Changed!';
+                    header("location: profile");
+                }
+                else{
+                    $_SESSION['message'] = "Connection Failed";
+                } 
+    }
+    else{
+        $_SESSION['message'] = "Passwords do not match";
+    }
+}
+else{
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,22 +64,34 @@ require('php/database.php');
                     </button>
                 </div>
             </div>
+            <h3 style= "margin-top:-40px;margin-left:50px;"><a href="php/logout">Log out</a></h3>
         </div>
         <div class="profile_line"></div>
         <?php 
         endwhile;
+
+        $sql_userid_check = "SELECT * FROM soft WHERE user_id ='$user_id'";
+        $res_u = $sql_connection -> query($sql_userid_check) or die (mysqli_error($sql_connection));
+        if(mysqli_num_rows($res_u) > 0 ){
+            $connect=$sql_connection->prepare("SELECT soft.id, soft.user_id, soft.products_id,soft.date_buy,soft.date_end,soft.status,soft.banned,
+            soft.banned_description,soft.ssd,products.id,products.product_name,products.img FROM soft,products 
+            WHERE soft.user_id='$user_id' AND soft.products_id = products.id");
+            $connect->bind_result($id, $user_id_second, $products_id,$date_buy,$data_end,$status,$banned,$banned_description,$ssd,$products_id,$products_name,$products_image);
+            $connect->execute();
+            while($connect ->fetch()):
+
         ?>
         <div class="profile_products">
             <a class="modal-trigger profile_product" href="#modal1">
                 <div class="">
-                    <h5 class="profile_product_title">CS:GO Qwerty</h5>
-                    <div> <img class="profile_product_img" src="images/products/csgo.jpg"/> </div>
+                    <h5 class="profile_product_title"><?php echo $products_name; ?> -  Qwerty</h5>
+                    <div> <img class="profile_product_img" src="images/products/<?php echo $products_image; ?>"/> </div>
                     <div>
-                        <h6 class="profile_product_status">Status: Active</h6>
+                        <h6 class="profile_product_status">Status: <?php echo $status; ?></h6>
                     </div>
                     <div class="profile_product_dates">
-                        <p class="profile_product_date col s6">30 days left</p>
-                        <p class="profile_product_date2 col s6">11.09.2019 - 11.10.2019</p>
+                        <p class="profile_product_date col s6"><?php echo floor((strtotime($data_end) - strtotime($date_buy)) / (60*60*24) );?> days left</p>
+                        <p class="profile_product_date2 col s6"><?php echo $date_buy.' - '. $data_end;?></p>
                     </div>
                 </div>
             </a>
@@ -71,6 +105,20 @@ require('php/database.php');
                 </div>
             </div>
         </div>
+
+<?php 
+        endwhile;
+    }
+        
+        
+        else{
+            ?>
+            
+            <div class="col s12"><h1 style="text-align:center;">You have no purchased items</h1></div>
+            <?php
+        }
+            ?>
+
     </div>
     <?php require('php/footer.php') ?>
 </body>
