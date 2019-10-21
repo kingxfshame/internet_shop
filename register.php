@@ -22,9 +22,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $_SESSION['message'] = "Email already exists";
         }
         else{
-            $_SESSION['username'] = $username;
             $sql = "INSERT INTO users(email,username,password) VALUES('$email','$username','$password')";
             if($sql_connection ->query($sql) === true){
+                $_SESSION['username'] = $username;
+                $_SESSION['user_id'] = $id;
                 $_SESSION['message'] = 'Registration succesful!';
                 header("location: ./");
             }

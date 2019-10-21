@@ -7,6 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <div class="nav-wrapper">
       <a href="./" class="brand-logo"><img class="" width="50%" src="images/logo.png"></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="products" class="waves-effect waves-light btn pulse"> Products</a></li>
         <?php 
           if(isset($_SESSION['username'])){
             if($_SESSION['username'] == "")
@@ -19,7 +20,6 @@ if (session_status() == PHP_SESSION_NONE) {
             else{
               ?>
                 <li><a href="profile"><?= $_SESSION['username'] ?></a></li>
-                <li><a href="php/logout">Log out</a></li>
               <?php 
             }
             ?>
@@ -33,7 +33,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php 
           }
         ?>
-        <li><a href="products" class="waves-effect waves-light btn pulse"> Products</a></li>
+
       </ul>
     </div>
   </nav>
