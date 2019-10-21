@@ -8,6 +8,21 @@ require('php/database.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // paroli sovpadayt
+    if($_POST['password'] == null || $_POST['password2'] == null){
+
+        $avatar_path = $sql_connection ->real_escape_string('images/avatars/'.$_FILES['avatar']['name']);
+        print_r($_FILES);
+        if(preg_match("!image!", $_FILES['avatar']['type'])){
+            if(copy($_FILES['avatar']['tmp_name'],$avatar_path)){
+                $sql = "UPDATE users set img = '$avatar_path' WHERE id='$user_id'";
+                if($sql_connection ->query($sql) === true){
+                    $_SESSION['message'] = 'Password Changed!';
+                    header("location: profile");
+                }
+            }
+        }
+    }
+    else{
         if($_POST['password'] == $_POST['password2']){
             $password = md5($_POST['password']);
         
@@ -25,6 +40,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION['message'] = "Passwords do not match";
     }
 }
+    }
+
 else{
 
 }
@@ -47,23 +64,24 @@ else{
             while($connect ->fetch()):
             
     ?>
+    <form id="task-form" class="form" action="profile" method="post" enctype="multipart/form-data" autocomplete="off">
     <div class="row container profile_content">
         <div class="profile_top">
             <div class="profile_img">
-                <img class="profile-pic" src="images/avatars/<?php echo $img ?>" alt="profile_image">
+                <img class="profile-pic" src="<?php echo $img ?>" alt="profile_image">
                 <div class="upload-button">
                     <i class="fas fa-arrow-circle-up" aria-hidden="true"></i>
                 </div>
-                <input class="file-upload" type="file" accept="image/*"/>
+                <div class="avatar"><input name="avatar" class="file-upload" type="file" accept="images/avatars/*" /></div>
             </div>
             <div class="profile_data">
                 <div class="profile_data_">
                     <h6>Username: <?= $_SESSION['username'] ?></h6>
                     <h6>Email: <?php echo $email ?></h6>
-                    <form id="task-form" class="form" action="profile" method="post" enctype="multipart/form-data" autocomplete="off">
+
                             <div class="profile_input">
-                                <input placeholder="New password" type="password" id="password" name="password" required>
-                                <input placeholder="Repeat new password" type="password" id="password2" name="password2" required>
+                                <input placeholder="New password" type="password" id="password" name="password" >
+                                <input placeholder="Repeat new password" type="password" id="password2" name="password2" >
                             </div>
                             <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                                 <i class="material-icons right">send</i>
@@ -73,6 +91,7 @@ else{
                 </div>
             
             </div>
+            </form>
             <h3 style= "margin-top:-40px;margin-left:50px;"><a href="php/logout">Log out</a></h3>
         </div>
         
