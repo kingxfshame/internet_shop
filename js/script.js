@@ -39,3 +39,7 @@
        $(".file-upload").click();
     });
 });
+
+$(document).ready(function(){
+  $('.sidenav').sidenav();
+});
