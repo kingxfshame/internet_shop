@@ -68,7 +68,6 @@ else{
                 <div class="upload-button">
                     <i class="fas fa-arrow-circle-up" aria-hidden="true"></i>
                 </div>
-<<<<<<< HEAD
                 <div class="avatar"><input name="avatar" class="file-upload" type="file" accept="images/avatars/*" /></div>
             </div>
             <div class="profile_data">
@@ -83,35 +82,10 @@ else{
                             <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                                 <i class="material-icons right">send</i>
                             </button>
-=======
-                <input class="file-upload" type="file" accept="image/*" />
-            </div>
-            <div class="profile_data">
-                <div class="profile_data_">
-                    <h6>Username:
-                        <?= $_SESSION['username'] ?>
-                    </h6>
-                    <h6>Email:
-                        <?php echo $email ?>
-                    </h6>
-                    <form id="task-form" class="form" action="profile" method="post" enctype="multipart/form-data" autocomplete="off">
-                        <div class="profile_input">
-                            <input placeholder="New password" type="password" id="password" name="password" required>
-                            <input placeholder="Repeat new password" type="password" id="password2" name="password2" required>
-                        </div>
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                            <i class="material-icons right">send</i>
-                        </button>
->>>>>>> 1372aaf4fde5e0841bb6d2653300b2c699357792
                     </form>
                 </div>
             </div>
-<<<<<<< HEAD
-            </form>
-            <h3 style= "margin-top:-40px;margin-left:50px;"><a href="php/logout">Log out</a></h3>
-=======
             <h3 style="margin-top:-40px; margin-left:93px; font-size: 20px;"><a href="php/logout">Log out</a></h3>
->>>>>>> 1372aaf4fde5e0841bb6d2653300b2c699357792
         </div>
         <div class="profile_line"></div>
         <?php 
