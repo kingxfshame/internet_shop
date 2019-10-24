@@ -22,17 +22,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
     }
     else{
+
+
+
         if($_POST['password'] == $_POST['password2']){
+            $password = $_POST['password'];
+            $uppercase = preg_match('@[A-Z]@', $password);
+            $lowercase = preg_match('@[a-z]@', $password);
+            $number    = preg_match('@[0-9]@', $password);
+        if(!$uppercase || !$lowercase || !$number || strlen($password) < 8) {
+                $_SESSION['message'] = 'Password should be at least 8 characters in length and should include at least one upper case letter, one number.';
+        }
+        else{
             $password = md5($_POST['password']);
+            $sql = "UPDATE users set password = '$password' WHERE id='$user_id'";
+            if($sql_connection ->query($sql) === true){
+                $_SESSION['message'] = 'Password Changed!';
+                header("location: profile");
+            }
+            else{
+                $_SESSION['message'] = "Connection Failed";
+            } 
+            }
         
-                $sql = "UPDATE users set password = '$password' WHERE id='$user_id'";
-                if($sql_connection ->query($sql) === true){
-                    $_SESSION['message'] = 'Password Changed!';
-                    header("location: profile");
-                }
-                else{
-                    $_SESSION['message'] = "Connection Failed";
-                } 
     }
     else{
         $_SESSION['message'] = "Passwords do not match";
@@ -48,7 +60,7 @@ else{
 
 <head>
     <?php require('php/head_links.php') ?>
-    <title>Qwerty Multihack - Login</title>
+    <title>Qwerty Multihack - Profile</title>
 </head>
 
 <body>
@@ -82,12 +94,22 @@ else{
                             <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                                 <i class="material-icons right">send</i>
                             </button>
+
                     </form>
                 </div>
             </div>
             <h3 style="margin-top:-40px; margin-left:93px; font-size: 20px;"><a href="php/logout">Log out</a></h3>
+            <?php 
+            if($_SESSION['role'] == "admin"){
+                echo "<h3 style='margin-top:-40px; margin-left:400px; font-size: 20px;'><a href='admin?x=allproducts'>Admin</a></h3>";
+            }
+            ?>
+
+
+            
         </div>
         <div class="profile_line"></div>
+        
         <?php 
         endwhile;
         $sql_userid_check = "SELECT * FROM soft WHERE user_id ='$user_id'";
@@ -99,9 +121,46 @@ else{
             $connect->bind_result($id, $user_id_second, $products_id,$date_buy,$data_end,$status,$banned,$banned_description,$ssd,$products_id,$products_name,$products_image);
             $connect->execute();
             while($connect ->fetch()):
+            $current = strtotime(date("Y-m-d"));
+            $datediff = strtotime($data_end) - $current ;
+            $difference = floor($datediff/(60*60*24));
+            
+            if($difference < -1) {
+                ?>
+                <div class="profile_products col s4">
+                <a class="modal-trigger profile_product_negative" href="products">
+                <div class="">
+                    <h5 class="profile_product_title">
+                        <?php echo $products_name; ?> - Qwerty</h5>
+                    <div> <img class="profile_product_img" src="images/products/<?php echo $products_image; ?>" /> </div>
+                    <div>
+                        <h6 class="profile_product_status col s12">Status:
+                            Not Active
+                        </h6>
+                        <p class="profile_product_date2 col s12">
+                            <?php echo $date_buy.' - '. $data_end;?>
+                        </p>
+                    </div>
+                    <?php 
+                    ?>
+                </div>
+            </a>
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                </div>
+            </div>
+        </div>
+
+
+                <?php             
+            }
+            else{
             
     ?>
-        <div class="profile_products col s4">
+            <div class="profile_products col s4">
             <a class="modal-trigger profile_product" href="#modal1">
                 <div class="">
                     <h5 class="profile_product_title">
@@ -133,6 +192,7 @@ else{
             </div>
         </div>
         <?php 
+        }
         endwhile;
     }
         
@@ -147,6 +207,10 @@ else{
             ?>
     </div>
     <?php require('php/footer.php') ?>
+    <script>
+        M.toast({html: '<?php echo $_SESSION['message'] ?>', classes: 'rounded'});
+                                 
+    </script>
 </body>
 
 </html>

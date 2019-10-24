@@ -13,12 +13,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $res_u = $sql_connection -> query($sql_username) or die ($sql_connection -> error());
         $res_e = $sql_connection -> query($sql_email) or die ($sql_connection -> error());
         if(mysqli_num_rows($res_u) > 0 || mysqli_num_rows($res_e) > 0){
-            $sql=$sql_connection->prepare("SELECT id, email,username FROM users WHERE username='$email' OR email ='$email'");
-            $sql->bind_result($id, $email, $username);
+            $sql=$sql_connection->prepare("SELECT id, email,username,admin_check FROM users WHERE username='$email' OR email ='$email'");
+            $sql->bind_result($id, $email, $username,$admin_check);
             $sql->execute();
             while($sql -> fetch()){
                 $_SESSION['username'] = $username;
                 $_SESSION['user_id'] = $id;
+                if($admin_check == "admin") $_SESSION['role'] = "admin"; 
             }
 
             header("location: ./");

@@ -17,7 +17,35 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $res_u = $sql_connection -> query($sql_userid_check) or die (mysqli_error($sql_connection));
 
         if(mysqli_num_rows($res_u) > 0){
+            $sql=$sql_connection->prepare("SELECT id,user_id,products_id,date_buy,date_end,status FROM soft WHERE user_id ='$user_id' AND products_id ='$game_id'");
+            $sql->bind_result($idsoft, $usersid, $productid,$datebuy,$dateend,$statuss);
+            $sql->execute();
+            while($sql -> fetch()):
+                    $current = strtotime(date("Y-m-d"));
+                    $datediff = strtotime($dateend) - $current ;
+                    $difference = floor($datediff/(60*60*24));
 
+
+                if($difference < -1) { 
+                    $sql = "UPDATE soft set date_buy ='$currentdate' , date_end = '$timework' WHERE user_id = '$user_id' and products_id = '$game_id'";
+                    if($sql_connection ->query($sql) === true){
+                        header("location: profile");
+                        
+                    }
+                }
+                else{
+                    $dateupdate = date('Y-m-d', strtotime($dateend. ' + '.$days.' days'));
+                    $sql = "UPDATE soft set date_end = '$dateupdate' WHERE user_id='$user_id' AND products_id = '$game_id'";
+                    if($sql_connection ->query($sql) === true){
+                        header("location: profile");
+                    }
+                }
+
+            endwhile;
+            
+
+
+            
         }
         else{
             $sql = "INSERT INTO soft(user_id,products_id,date_buy,date_end,status) VALUES('$user_id','$game_id','$currentdate','$timework', 'Active')";

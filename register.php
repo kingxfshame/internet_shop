@@ -5,8 +5,15 @@ require('php/database.php');
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // paroli sovpadayt
     if($_POST['password'] == $_POST['second_password']){
-
-        $username = $sql_connection ->real_escape_string($_POST['username']);
+        $password = $_POST['password'];
+        $uppercase = preg_match('@[A-Z]@', $password);
+        $lowercase = preg_match('@[a-z]@', $password);
+        $number    = preg_match('@[0-9]@', $password);
+        if(!$uppercase || !$lowercase || !$number || strlen($password) < 8) {
+            $_SESSION['message'] = 'Password should be at least 8 characters in length and should include at least one upper case letter, one number.';
+        }
+        else{
+            $username = $sql_connection ->real_escape_string($_POST['username']);
         $email = $sql_connection ->real_escape_string($_POST['email']);
         $password = md5($_POST['password']);
         $sql_username = "SELECT * FROM users WHERE username ='$username'";
@@ -34,6 +41,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             } 
         }
 
+        }
+
+
     
     }
     else{
@@ -59,19 +69,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
              <div class="col s4" style="margin-left:30%;margin-top:5%;margin-bottom:4.9%;">
                     <div class="card-content">
                         <div class="row">
-                            <form id="task-form" class="form" action="register.php" method="post" enctype="multipart/form-data" autocomplete="off">
-                                <?php 
-                                    if($_SESSION['message'] == ''){
-
-                                    }
-                                    else{
-                                        ?>
-                                                <div class="alert"><?=$_SESSION['message'] ?></div>
-                                        <?php
-                                    }
-                                ?>
-
-                                
+                            <form id="task-form" class="form" action="register.php" method="post" enctype="multipart/form-data" autocomplete="off">             
                                 <div class="input-field col s12 m12">
                                     <input type="email" id="email" name="email" required>
                                     <label for="email"><i class="material-icons">email</i> Email</label>
@@ -102,5 +100,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     </div>
 
     <?php require('php/footer.php') ?>
+    <script>
+        M.toast({html: '<?php echo $_SESSION['message'] ?>', classes: 'rounded'});
+                                 
+    </script>
 </body>
 </html>
