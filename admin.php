@@ -114,9 +114,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 <li>
                     <a href="admin?x=users">Users</a>
                 </li>
-                <li>
-                    <a href="admin?x=stats">Stats</a>
-                </li>
             </ul>
         </nav>
 
@@ -247,38 +244,119 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
         else if($form == "addnew"){
           ?>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-            Launch demo modal
-          </button>
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    ...
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <h2>Add new product</h2>
+         
+         <div class="line"></div>
+          <div class="card card-body">
+          
+           <form id="task-form" action="admin" method="post" enctype="multipart/form-data" autocomplete="off">
+           <input type='hidden' name='addnew'>
+           <div class="row">
+
+           <div class="col">
+                
+               <div class="form-group">
+                 <label for="name">Name: </label>
+                 <input type="text" class="form-control" id="name" name="name" placeholder="CS GO" >
+               </div>
+                   <div class="form-group">
+                   <label for="price">Price for 1 day: </label>
+                   <input type="text" class="form-control" id="price" name="price" placeholder="0.4">
+
+                   </div>
+
+                   <div class="form-group">
+                   <label for="short_description">Short Description: </label>
+                   <input type="text" class="form-control" id="short_description" name="short_description" placeholder="Wallhack,Aimbot">
+                   </div>
+                   <div class="form-group">
+                   <label for="support">Support: </label>
+                   <input type="text" class="form-control" id="support" name="support" placeholder="Linux">
+
+                   </div>
+
+
+
+               </div>
+
+             <div class="col">
+               <div class="form-group">
+               <label for="description<?php echo $id ?>">Description</label>
+               <textarea class="form-control" id="description" name="description" rows="5" placeholder="Description"></textarea>
+
+               </div>
+                 <div class="file-field">
+                   <div class="z-depth-1-half mb-4">
+                   </div>
+                   <div class="d-flex justify-content-center">
+                     <div class="btn btn-mdb-color btn-rounded float-left">
+                       <input type="file" id="file<?php echo $id ?>" name="file<?php echo $id ?>" accept="images/products/*" class="file-upload">
+                     </div>
+                   </div>
+                 </div>
+
+           </div>
 
 
 
 
 
+           </div>
+
+           <div class="line"></div>
+           <div class="form-group col-sm">
+             <label for="staticEmail2" class="sr-only">Email</label>
+               <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Username:    <?php echo $_SESSION['username'] ?>">
+           </div>
+
+
+           <div class="form-group mx-sm-3 mb-2">
+               <label for="password<?php echo $id ?>" class="sr-only">Password</label>
+               <input type="password" class="form-control" id="password<?php echo $id ?>" name="password<?php echo $id ?>" placeholder="Password">
+             </div>
+             <a href="#" onclick="document.getElementById('task-form').submit();">
+               <button class="btn btn-primary mb-2">Confirm identity</button>
+               </a>
+             </form>
+           </div>
+
+
+          
+          <div class="line"></div>
           <?php
+        
+     }
+        else if($form == "users"){
+          ?>
+          <h2>All Users</h2>
+          <div class="line"></div>
+          <table class="table">
+          <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Email</th>
+                <th scope="col">Username</th>
+              </tr>
+         </thead>
+          <?php
+            $connect=$sql_connection->prepare("SELECT id,email,username FROM users");
+            $connect->bind_result($id, $email,$username);
+            $connect->execute();
+            while($connect ->fetch()):
+          ?>
+            <tr>
+              <th scope="row"><?php echo $id; ?></th>
+              <td><?php echo $email; ?></td>
+              <td><?php echo $username; ?></td>
+              
+            </tr>
+        
+          <?php
+          endwhile;
         }
             ?>
-
-            </div>
+          </div>
+      </div>
     </div>
 
 
