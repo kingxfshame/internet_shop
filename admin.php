@@ -7,21 +7,27 @@ require('php/database.php');
  else{
     header('location: ./');
  }
- switch ($_GET['x']) {
-  case 'allproducts':
-  $form = "allproducts";
-  break;
-  case 'addnew':
-  $form = "addnew";
-  break;
+ if(isset($_GET['x'])){
+  switch ($_GET['x']) {
+    case 'allproducts':
+    $form = "allproducts";
+    break;
+    case 'addnew':
+    $form = "addnew";
+    break;
+  
+    case 'users':
+    $form = "users";
+    break;
+    case 'stats':
+    $form = "stats";
+    break;
+  }
+ }
+ else{
+   $form = "";
+ }
 
-  case 'users':
-  $form = "users";
-  break;
-  case 'stats':
-  $form = "stats";
-  break;
-}
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
   if(isSet($_REQUEST["task-form"])){
@@ -218,6 +224,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 
+          <?php
+        }
+        else{
+          ?>
+          <div class="container">
+          <h1>Welcome To Admin Page</h1>
+          </div>
           <?php
         }
             ?>

@@ -175,7 +175,7 @@ else{
                         </p>
                         <p class="profile_product_date col s12">
                             <?php 
-                        echo floor((strtotime($data_end) - strtotime($date_buy)) / (60*60*24) );
+                        echo floor((strtotime($data_end) - $current) / (60*60*24) );
                         
                         ?> days</p>
                     </div>
