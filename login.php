@@ -20,6 +20,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $_SESSION['username'] = $username;
                 $_SESSION['user_id'] = $id;
                 if($admin_check == "admin") $_SESSION['role'] = "admin"; 
+                else{
+                    $_SESSION['role'] = "";
+                }
             }
 
             header("location: ./");

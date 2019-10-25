@@ -23,6 +23,12 @@ require('php/database.php');
   break;
 }
 
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+  if(isSet($_REQUEST["task-form"])){
+    echo 'test';
+  }
+}
+
  ?>
 
 <!DOCTYPE html>
@@ -72,15 +78,6 @@ require('php/database.php');
                     <a href="admin?x=stats">Stats</a>
                 </li>
             </ul>
-
-            <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
-            </ul>
         </nav>
 
         <!-- Page Content Holder -->
@@ -112,8 +109,8 @@ require('php/database.php');
            
             <div class="line"></div>
             <?php 
-                  $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products");
-                  $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                  $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description,support FROM products");
+                  $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description,$support);
                   $connect->execute();
                   while($connect ->fetch()):
                     
@@ -126,27 +123,51 @@ require('php/database.php');
              <div class="collapse" id="collapse<?php echo $id?>">
               <div class="card card-body">
               
-              <form class="form-inline" id="task-form" action="profile" method="post" enctype="multipart/form-data" autocomplete="off">
+              <form id="task-form" action="admin" method="post" enctype="multipart/form-data" autocomplete="off">
               <div class="row">
-              <div class="form-group">
-              <label for="exampleFormControlInput1">Name: </label>
-              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-            </div>
+
+              <div class="col">
+                    
+                  <div class="form-group">
+                    <label for="name">Name: </label>
+                    <input type="text" class="form-control" id="name" placeholder="name@example.com" value="<?php echo $product_name ?>">
+                  </div>
+                      <div class="form-group">
+                      <label for="price">Price: </label>
+                      <input type="text" class="form-control" id="price" placeholder="name@example.com" value="<?php echo $price ?>">
+
+                      </div>
+
+                      <div class="form-group">
+                      <label for="short_description">Short Description: </label>
+                      <input type="text" class="form-control" id="short_description" placeholder="name@example.com" value="<?php echo $short_desc ?>">
+                      </div>
+                      <div class="form-group">
+                      <label for="support">Support: </label>
+                      <input type="text" class="form-control" id="support" placeholder="name@example.com" value="<?php echo $support ?>">
+
+                      </div>
 
 
 
+                  </div>
 
-                <div class="form-group col-md-12">
+                <div class="col">
+                  <div class="form-group">
                   <label for="description">Description</label>
                   <textarea class="form-control" id="description" rows="5"><?php echo $description ?></textarea>
-                </div>
+
+                  </div>
+              </div>
+
 
 
 
 
               </div>
+
               <div class="line"></div>
-              <div class="form-group mb-2">
+              <div class="form-group col-sm">
                 <label for="staticEmail2" class="sr-only">Email</label>
                   <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Username:    <?php echo $_SESSION['username'] ?>">
               </div>
@@ -161,7 +182,7 @@ require('php/database.php');
               </div>
 
 
-
+            
             </div>    
              <div class="line"></div>
              <?php 
