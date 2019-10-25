@@ -27,11 +27,45 @@ require('php/database.php');
  else{
    $form = "";
  }
-
+$email = $_SESSION['username'];
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-  if(isSet($_REQUEST["task-form"])){
-    echo 'test';
+  if(isSet($_REQUEST["update"])){
+    $password = md5($_POST['password'.$_REQUEST['update']]);
+    $sql_username = "SELECT * FROM users WHERE username ='$email' AND password ='$password'";
+    $res_u = $sql_connection -> query($sql_username) or die ($sql_connection -> error());
+    if(mysqli_num_rows($res_u) > 0){
+      $product_name = $_POST['name'.$_REQUEST['update']];
+      $price = $_POST['price'.$_REQUEST['update']];
+      $short = $_POST['short_description'.$_REQUEST['update']];
+      $description = $_POST['description'.$_REQUEST['update']];
+      $support = $_POST['support'.$_REQUEST['update']];
+      $idd = $_REQUEST['update'];
+      $img = "file".$_REQUEST['update'];
+      $avatar_path = $sql_connection ->real_escape_string($_FILES[$img]['name']);
+      
+      if(preg_match("!image!", $_FILES[$img]['type'])){
+          if(copy($_FILES[$img]['tmp_name'],'images/products/'.$avatar_path)){
+            $sql = "UPDATE products set product_name = '$product_name', price='$price' ,img='$avatar_path' ,short_description='$short',description='$description',support='$support' WHERE id='$idd'";
+            if($sql_connection ->query($sql) === true){
+              header("location: admin");
+              
+            }
+          }
+
+      }
+      else{
+        $sql = "UPDATE products set product_name = '$product_name', price='$price' , short_description='$short',description='$description',support='$support' WHERE id='$idd'";
+        if($sql_connection ->query($sql) === true){
+          header("location: admin");
+          
+        }
+      }
+
+    }
+    else{
+      $_SESSION['admin_message'] = "Wrond Password";
+    }
   }
 }
 
@@ -60,7 +94,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <!-- Sidebar Holder -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Qwerty</h3>
+                <a href="admin"><h3>Qwerty</h3></a>
             </div>
 
             <ul class="list-unstyled components">
@@ -110,7 +144,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     </div>
                 </div>
             </nav>
-            <?php if($form == "allproducts") {?>
+            <?php if($form == "" || $form == "allproducts") {?>
             <h2>All Products</h2>
            
             <div class="line"></div>
@@ -130,27 +164,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
               <div class="card card-body">
               
               <form id="task-form" action="admin" method="post" enctype="multipart/form-data" autocomplete="off">
+              <input type='hidden' name='update' value='<?php echo $id?>'>
               <div class="row">
 
               <div class="col">
                     
                   <div class="form-group">
-                    <label for="name">Name: </label>
-                    <input type="text" class="form-control" id="name" placeholder="name@example.com" value="<?php echo $product_name ?>">
+                    <label for="name<?php echo $id ?>">Name: </label>
+                    <input type="text" class="form-control" id="name<?php echo $id ?>" name="name<?php echo $id?>" placeholder="name@example.com" value="<?php echo $product_name ?>">
                   </div>
                       <div class="form-group">
-                      <label for="price">Price: </label>
-                      <input type="text" class="form-control" id="price" placeholder="name@example.com" value="<?php echo $price ?>">
+                      <label for="price<?php echo $id ?>">Price: </label>
+                      <input type="text" class="form-control" id="price<?php echo $id ?>" name="price<?php echo $id?>" placeholder="name@example.com" value="<?php echo $price ?>">
 
                       </div>
 
                       <div class="form-group">
-                      <label for="short_description">Short Description: </label>
-                      <input type="text" class="form-control" id="short_description" placeholder="name@example.com" value="<?php echo $short_desc ?>">
+                      <label for="short_description<?php echo $id ?>">Short Description: </label>
+                      <input type="text" class="form-control" id="short_description<?php echo $id ?>" name="short_description<?php echo $id?>" placeholder="name@example.com" value="<?php echo $short_desc ?>">
                       </div>
                       <div class="form-group">
-                      <label for="support">Support: </label>
-                      <input type="text" class="form-control" id="support" placeholder="name@example.com" value="<?php echo $support ?>">
+                      <label for="support<?php echo $id ?>">Support: </label>
+                      <input type="text" class="form-control" id="support<?php echo $id ?>" name="support<?php echo $id?>" placeholder="name@example.com" value="<?php echo $support ?>">
 
                       </div>
 
@@ -160,10 +195,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
                 <div class="col">
                   <div class="form-group">
-                  <label for="description">Description</label>
-                  <textarea class="form-control" id="description" rows="5"><?php echo $description ?></textarea>
+                  <label for="description<?php echo $id ?>">Description</label>
+                  <textarea class="form-control" id="description<?php echo $id ?>" name="description<?php echo $id?>" rows="5"><?php echo $description ?></textarea>
 
                   </div>
+                    <div class="file-field">
+                      <div class="z-depth-1-half mb-4">
+                        <img src="images/products/<?php echo $img ?>" class="img-fluid"
+                          alt="example placeholder" style="margin-left:100px;width:400px;height:200px;">
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <div class="btn btn-mdb-color btn-rounded float-left">
+                          <span>Choose file</span>
+                          <input type="file" id="file<?php echo $id ?>" name="file<?php echo $id ?>" accept="images/products/*" class="file-upload">
+                        </div>
+                      </div>
+                    </div>
+
               </div>
 
 
@@ -181,9 +229,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
               <div class="form-group mx-sm-3 mb-2">
                   <label for="password<?php echo $id ?>" class="sr-only">Password</label>
-                  <input type="password" class="form-control" id="password<?php echo $id ?>" placeholder="Password">
+                  <input type="password" class="form-control" id="password<?php echo $id ?>" name="password<?php echo $id ?>" placeholder="Password">
                 </div>
-                  <button type="submit" class="btn btn-primary mb-2">Confirm identity</button>
+                <a href="#" onclick="document.getElementById('task-form').submit();">
+                  <button class="btn btn-primary mb-2">Confirm identity</button>
+                  </a>
                 </form>
               </div>
 
@@ -226,13 +276,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
           <?php
         }
-        else{
-          ?>
-          <div class="container">
-          <h1>Welcome To Admin Page</h1>
-          </div>
-          <?php
-        }
             ?>
 
             </div>
@@ -251,6 +294,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
             });
+
         });
     </script>
 </body>
