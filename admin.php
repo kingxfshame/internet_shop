@@ -1,6 +1,8 @@
 <?php
 session_start();
 require('php/database.php');
+
+
  if($_SESSION['role'] == "admin"){
     
  }
@@ -28,6 +30,13 @@ require('php/database.php');
    $form = "";
  }
 $email = $_SESSION['username'];
+if(isset($_SESSION['admin_message'])){
+
+}
+else{
+  $_SESSION['admin_message'] = '';
+  $_SESSION['admin_product'] = '';
+}
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
   if(isSet($_REQUEST["update"])){
@@ -48,7 +57,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
           if(copy($_FILES[$img]['tmp_name'],'images/products/'.$avatar_path)){
             $sql = "UPDATE products set product_name = '$product_name', price='$price' ,img='$avatar_path' ,short_description='$short',description='$description',support='$support' WHERE id='$idd'";
             if($sql_connection ->query($sql) === true){
-              header("location: admin");
+              $_SESSION['admin_product'] = $product_name;
+              $_SESSION['admin_message'] = 'The product has been successfully updated';
               
             }
           }
@@ -57,15 +67,53 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
       else{
         $sql = "UPDATE products set product_name = '$product_name', price='$price' , short_description='$short',description='$description',support='$support' WHERE id='$idd'";
         if($sql_connection ->query($sql) === true){
-          header("location: admin");
+          $_SESSION['admin_product'] = $product_name;
+          $_SESSION['admin_message'] = 'The product has been successfully updated';
           
+         
         }
       }
 
     }
     else{
-      $_SESSION['admin_message'] = "Wrond Password";
+      $_SESSION['admin_product'] = 'Wrong Password';
+      $_SESSION['admin_message'] = 'You entered an incorrect password for your account';
     }
+  }
+  else if(isset($_REQUEST['addnew'])){
+    $password = md5($_POST['password']);
+    $sql_username = "SELECT * FROM users WHERE username ='$email' AND password ='$password'";
+    $res_u = $sql_connection -> query($sql_username) or die ($sql_connection -> error());
+    if(mysqli_num_rows($res_u) > 0){
+
+      $product_name = $_POST['name_addnew'];
+      $price = $_POST['price_addnew'];
+      $short = $_POST['short_description_addnew'];
+      $description = $_POST['description_addnew'];
+      $support = $_POST['support_addnew'];
+      $img = "file_addnew";
+      $avatar_path = $sql_connection ->real_escape_string($_FILES[$img]['name']);
+
+      if(preg_match("!image!", $_FILES[$img]['type'])){
+        if(copy($_FILES[$img]['tmp_name'],'images/products/'.$avatar_path)){
+          $sql = "INSERT INTO products(product_name,price,img,short_description,description,support,status) VALUES('$product_name','$price','$avatar_path','$short','$description','$support','Active')";
+          if($sql_connection ->query($sql) === true){
+            $_SESSION['admin_product'] = $product_name;
+            $_SESSION['admin_message'] = 'The product has been successfully added';
+            
+          }
+        }
+
+    }
+    }
+    else{
+      $_SESSION['admin_product'] = 'Wrong Password';
+      $_SESSION['admin_message'] = 'You entered an incorrect password for your account';
+    }
+
+
+
+
   }
 }
 
@@ -85,11 +133,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
-
+    <link rel="shortcut icon" type="image/x-icon" href="images/q.ico" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Admin - Qwerty</title>
 </head>
 <body>
+
 <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -141,6 +190,37 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     </div>
                 </div>
             </nav>
+            <?php 
+            
+            if($_SESSION['admin_message'] == ''){
+
+            }
+            else{
+
+           
+            
+            ?>
+              <div style="position: absolute; top: 20; right: 0;">
+                  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" style="background-color:black;">
+                    <div class="toast-header">
+                      
+                      <strong class="mr-auto"><?php echo $_SESSION['admin_product'] ?></strong>
+                      <small class="text-muted">just now</small>
+                      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="toast-body" style="color:white;">
+                    <?php echo $_SESSION['admin_message'] ?>
+                    </div>
+                  </div>
+              </div>
+              <?php 
+               }
+               $_SESSION['admin_product'] = '';
+               $_SESSION['admin_message'] = '';
+              ?>
+
             <?php if($form == "" || $form == "allproducts") {?>
             <h2>All Products</h2>
            
@@ -251,27 +331,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
           
            <form id="task-form" action="admin" method="post" enctype="multipart/form-data" autocomplete="off">
            <input type='hidden' name='addnew'>
+           
            <div class="row">
 
            <div class="col">
                 
                <div class="form-group">
-                 <label for="name">Name: </label>
-                 <input type="text" class="form-control" id="name" name="name" placeholder="CS GO" >
+                 <label for="name_addnew">Name: </label>
+                 <input type="text" class="form-control" id="name_addnew" name="name_addnew" placeholder="CS GO" >
                </div>
                    <div class="form-group">
-                   <label for="price">Price for 1 day: </label>
-                   <input type="text" class="form-control" id="price" name="price" placeholder="0.4">
+                   <label for="price_addnew">Price for 1 day: </label>
+                   <input type="text" class="form-control" id="price_addnew" name="price_addnew" placeholder="0.4">
 
                    </div>
 
                    <div class="form-group">
-                   <label for="short_description">Short Description: </label>
-                   <input type="text" class="form-control" id="short_description" name="short_description" placeholder="Wallhack,Aimbot">
+                   <label for="short_description_addnew">Short Description: </label>
+                   <input type="text" class="form-control" id="short_description_addnew" name="short_description_addnew" placeholder="Wallhack,Aimbot">
                    </div>
                    <div class="form-group">
-                   <label for="support">Support: </label>
-                   <input type="text" class="form-control" id="support" name="support" placeholder="Linux">
+                   <label for="support_addnew">Support: </label>
+                   <input type="text" class="form-control" id="support_addnew" name="support_addnew" placeholder="Linux">
 
                    </div>
 
@@ -281,8 +362,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
              <div class="col">
                <div class="form-group">
-               <label for="description<?php echo $id ?>">Description</label>
-               <textarea class="form-control" id="description" name="description" rows="5" placeholder="Description"></textarea>
+               <label for="description_addnew">Description</label>
+               <textarea class="form-control" id="description_addnew" name="description_addnew" rows="5" placeholder="Description"></textarea>
 
                </div>
                  <div class="file-field">
@@ -290,7 +371,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                    </div>
                    <div class="d-flex justify-content-center">
                      <div class="btn btn-mdb-color btn-rounded float-left">
-                       <input type="file" id="file<?php echo $id ?>" name="file<?php echo $id ?>" accept="images/products/*" class="file-upload">
+                       <input type="file" id="file_addnew" name="file_addnew" accept="images/products/*" class="file-upload">
                      </div>
                    </div>
                  </div>
@@ -306,19 +387,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
            <div class="line"></div>
            <div class="form-group col-sm">
              <label for="staticEmail2" class="sr-only">Email</label>
-               <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Username:    <?php echo $_SESSION['username'] ?>">
+               <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Username: <?php echo $_SESSION['username'] ; ?>">
            </div>
 
 
            <div class="form-group mx-sm-3 mb-2">
-               <label for="password<?php echo $id ?>" class="sr-only">Password</label>
-               <input type="password" class="form-control" id="password<?php echo $id ?>" name="password<?php echo $id ?>" placeholder="Password">
+               <label for="password" class="sr-only">Password</label>
+               <input type="password" class="form-control" id="password" name="password" placeholder="Password">
              </div>
              <a href="#" onclick="document.getElementById('task-form').submit();">
                <button class="btn btn-primary mb-2">Confirm identity</button>
                </a>
              </form>
-           </div>
+             
+           
+    
 
 
           
@@ -360,7 +443,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     </div>
 
 
-
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -368,6 +450,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     <script type="text/javascript">
         $(document).ready(function () {
+          $('.toast').toast({
+            delay:5000
+          });
+          $('.toast').toast('show');
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
                 $(this).toggleClass('active');
