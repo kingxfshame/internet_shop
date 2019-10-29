@@ -31,8 +31,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         else{
             $sql = "INSERT INTO users(email,username,password) VALUES('$email','$username','$password')";
             if($sql_connection ->query($sql) === true){
-                $_SESSION['username'] = $username;
-                $_SESSION['user_id'] = $id;
                 $_SESSION['message'] = 'Registration succesful!';
                 header("location: ./");
             }

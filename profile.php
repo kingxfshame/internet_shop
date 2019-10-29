@@ -1,9 +1,9 @@
 <?php 
 session_start();
 $user_name = $_SESSION['username'];
-$user_id = 0;
-if(empty($_SESSION['user_id'])) $user_id = 0;
-else $user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'];
+
+
 require('php/database.php');
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // paroli sovpadayt
@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(copy($_FILES['avatar']['tmp_name'],$avatar_path)){
                 $sql = "UPDATE users set img = '$avatar_path' WHERE id='$user_id'";
                 if($sql_connection ->query($sql) === true){
-                    $_SESSION['message'] = 'Password Changed!';
+                    $_SESSION['message'] = 'Avatar Changed!';
                     header("location: profile");
                 }
             }
@@ -208,9 +208,13 @@ else{
     </div>
     <?php require('php/footer.php') ?>
     <script>
+    
         M.toast({html: '<?php echo $_SESSION['message'] ?>', classes: 'rounded'});
                                  
     </script>
+    <?php
+    $_SESSION['message'] == "";
+    ?>
 </body>
 
 </html>
