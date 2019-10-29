@@ -82,7 +82,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <h1>Confirm order</h1>
                             </div>
                             <div class="content_img col">
-                                <img class="responsive-img" src="images/products/<?php echo $img ?>" alt="profile_image" style="height:40vh;">
+                                <img class="responsive-img" src="images/products/<?php echo $img ?>" alt="profile_image" style="height:25vh; width:20vw;">
                             </div>
 
                             <div class="content_content">

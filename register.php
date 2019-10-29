@@ -82,6 +82,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <div class="input-field col s12 m12">
                                      <input type="password" id="password" name="password" required>
                                     <label for="password"><i class="material-icons">https</i> Password</label>
+                                    <span class="helper-text" data-error="wrong" data-success="right" style="color:white;">8 characters in lenght,1 upper case later and 1 number</span>
                                 </div>
 
                                 <div class="input-field col s12 m12">
