@@ -49,7 +49,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <div class="container">
         <div class="row">
              <div class="col s12"><h2 class="header" style="text-align:center;color:white;">Login</h2></div>
-             <div class="col s4" style="margin-left:35%;margin-top:14%;margin-bottom:19.5%;">
+             <div class="col s4" style="margin-left:35%;margin-top:14%;margin-bottom:9.5%;">
                     <div class="card-content">
                         <div class="row">
                             <form id="task-form" class="form" action="login" method="post" enctype="multipart/form-data" autocomplete="off">

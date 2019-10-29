@@ -66,7 +66,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <div class="container">
         <div class="row">
              <div class="col s12"><h2 class="header" style="text-align:center;color:white;">Register</h2></div>
-             <div class="col s4" style="margin-left:30%;margin-top:5%;margin-bottom:4.9%;">
+             <div class="col s4" style="margin-left:30%;margin-top:5%;margin-bottom:3.9%;">
                     <div class="card-content">
                         <div class="row">
                             <form id="task-form" class="form" action="register.php" method="post" enctype="multipart/form-data" autocomplete="off">             
