@@ -116,6 +116,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         ?>
     </div>
 </div>
+<div class="footer" style="margin-top:27vh">
 <?php require('php/footer.php') ?>
+</div>
+
 </body>
 </html>
