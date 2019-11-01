@@ -14,29 +14,98 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
     header('location: orderconfirm');
 }
+if(isset($_GET['sort'])){
+    switch ($_GET['sort']) {
+      case 'low_price':
+      $text = "Sort by low price";
+      $sort = "low_price";
+      break;
+      case 'high_price':
+      $text = "Sort by high price";
+      $sort = "high_price";
+      break;
+    
+      case 'asc':
+      $text = "Sort by A-Z";
+      $sort = "asc";
+      break;
+      case 'desc':
+      $text = "Sort by Z-A";
+      $sort = "desc";
+      break;
+    }
+   }
+else{
+    $text = "Click to sort!";
+    $sort = "";
+}
+
+
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <?php require('php/head_links.php') ?>
+
+
     <link rel="stylesheet" href="css/products.css"/>
     <link rel="stylesheet/less" type="text/css" href="css/style.less" />
     <title>Qwerty MultiHack - Products</title>
 </head>
 <body>
     <?php require('php/navbar.php') ?>
+    <div class="container">
+        <div class="row" style="margin-top: 1vh;margin-left: 80vh;margin-right:11vh;">
+        <div class="input-field col s12">
+        <a class='dropdown-trigger btn' href='#' data-target='dropdown1'><i class="material-icons">import_export</i> <?php echo $text; ?></a>
+<!-- Dropdown Structure -->
+            <ul id='dropdown1' class='dropdown-content'>
+            <li><a href="products?sort=low_price">Sort by low price</a></li>
+            <li><a href="products?sort=high_price">Sort by high price</a></li>
+            <li class="divider" tabindex="-1"></li>
+            <li><a href="products?sort=asc">Sort by A-Z</a></li>
+            <li><a href="products?sort=desc">Sort by Z-A</a></li>
+            </ul>
+        </div>
+        </div>
+    </div>
     <?php 
-            $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products");
-            $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
-            $connect->execute();
+            if($sort == ""){
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY id DESC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect->execute();
+                
+            }
+            else if($sort =="low_price"){
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY price ASC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect->execute();
+            }
+
+            else if($sort =="high_price"){
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY price DESC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect->execute();
+            }
+            else if($sort=="asc"){
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY product_name ASC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect->execute();
+            }
+            else if($sort =="desc"){
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY product_name DESC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect->execute();
+            }
             while($connect ->fetch()):
             
     ?>
     <div class="container row product z-depth-5">
         <a class="modal-trigger" href="#modal<?php echo $id?>">
             <div class="product_game col s6 m6">
-                <h1 class="product_title"><?php echo $product_name ?> - Qwerty</h1>
+                <h1 class="product_title"><?php echo $product_name ?></h1>
                 <ul class="product_desc">
 
                    <p class="flow-text product_desc">
@@ -50,7 +119,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     
                     </p> 
                 </ul>
-                <h3 class="product_price"><?php echo $price ?>€ for 1 day</h3>
+                <h4 class="product_price"><?php echo $price ?>€ for 1 day</h4>
                 <!-- <img src="images/parralax/csgo.png" class="product_image"> -->
             </div>
             <div class="product_cheat col s6 m6">
@@ -121,7 +190,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
          </form>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
         </div>
     </div>
 
@@ -134,5 +203,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <?php require('php/footer.php') ?>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
     <script src="js/epmrgo.js" type="text/javascript"></script>
+    <script>
+     $(document).ready(function(){
+        $('.dropdown-trigger').dropdown();
+  });
+    </script>
 </body>
 </html>
