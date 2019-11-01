@@ -391,7 +391,7 @@ i.large {
     background-color: rgba(47, 110, 165, 0.14);
     width: 235px;
     height: 320px;
-    margin-left: 35%;
+    margin-left: 24%;
     display: table-cell;
     box-shadow: 0 10px 38px 3px rgba(0,230,118, 0.12), 0 9px 46px 8px rgba(0,230,118, 0.10), 0 11px 15px -7px rgba(0,230,118, 0.2);
     border-radius: 30px;
@@ -429,7 +429,7 @@ i.large {
 
 .profile_product_img
 {
-    width: 224px;
+    width: 229px;
     height: 150px;
 }
 
