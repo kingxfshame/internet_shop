@@ -153,6 +153,14 @@ body{
 .page-footer{
     background: #38404e;
 }
+
+.page-footer-down-fix
+{
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+}
 .brand-logo{
     left: 23.5%;
     top: 10%;
@@ -192,7 +200,7 @@ p{
 i.large {
     font-size: 12rem;
     margin: 40px 0;
-    color: #ee6e73;
+    color: #30a3e6;
     display: block;
 }
 

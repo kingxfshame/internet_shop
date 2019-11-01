@@ -200,13 +200,15 @@ else{
         else{
             ?>
         <div class="col s12">
-            <h1 style="text-align:center;">You have no purchased items</h1>
+            <h4 style="text-align:center;">You have no purchased items</h4>
         </div>
         <?php
         }
             ?>
     </div>
-    <?php require('php/footer.php') ?>
+    <div class="page-footer-down-fix">
+        <?php require('php/footer.php') ?>
+    </div>
     <script>
     
         M.toast({html: '<?php echo $_SESSION['message'] ?>', classes: 'rounded'});
