@@ -40,7 +40,14 @@ else{
     $sort = "";
 }
 
-
+if(isset($_REQUEST['filter'])){
+    $low = $_REQUEST['from'];
+    $hight = $_REQUEST['to'];
+    if($low < 0) $low = 0;
+    if($hight < 0) $hight = 100;
+    $_SESSION["lower_price"] = $low;
+    $_SESSION["hight_price"] = $hight;
+}
 
 ?>
 <!DOCTYPE html>
@@ -57,50 +64,110 @@ else{
 <body>
     <?php require('php/navbar.php') ?>
     <div class="container">
-        <div class="row" style="margin-top: 1vh;margin-left: 80vh;margin-right:11vh;">
-        <div class="input-field col s12">
-        <a class='dropdown-trigger btn' href='#' data-target='dropdown1'><i class="material-icons">import_export</i> <?php echo $text; ?></a>
-<!-- Dropdown Structure -->
-            <ul id='dropdown1' class='dropdown-content'>
-            <li><a href="products?sort=low_price">Sort by low price</a></li>
-            <li><a href="products?sort=high_price">Sort by high price</a></li>
-            <li class="divider" tabindex="-1"></li>
-            <li><a href="products?sort=asc">Sort by A-Z</a></li>
-            <li><a href="products?sort=desc">Sort by Z-A</a></li>
-            </ul>
-        </div>
-        </div>
+
     </div>
+    <div class="sortcontainer">
+        <div class="row" style="margin-top: 1vh;margin-left: 80vh;margin-right:11vh;">
+            <div class="input-field col s12">
+            <a class='dropdown-trigger btn' href='#' data-target='dropdown1'><i class="material-icons">import_export</i> <?php echo $text; ?></a>
+                <ul id='dropdown1' class='dropdown-content'>
+                <li><a href="products?sort=low_price">Sort by low price</a></li>
+                <li><a href="products?sort=high_price">Sort by high price</a></li>
+                <li class="divider" tabindex="-1"></li>
+                <li><a href="products?sort=asc">Sort by A-Z</a></li>
+                <li><a href="products?sort=desc">Sort by Z-A</a></li>
+                </ul>
+            </div>
+            <div class="col s12">
+                <div class="profile_line"></div>
+            </div>
+            <?php 
+                    $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description,support FROM products ORDER BY price ASC limit 1");
+                    $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description,$system);
+                    $connect->execute();
+                    while($connect ->fetch()){
+                        if(isset($_SESSION["lower_price"])){
+
+                        }
+                        else{
+                            $_SESSION["lower_price"] = $price;
+                        }
+                        
+                    }
+            ?>
+            <form id="filter" action="products" enctype="multipart/form-data" autocomplete="off">
+            <div class="input-field col s6" style="margin-top:1%;">
+                <h6 style="color:white;">From</h6>
+                <input value="<?php echo $_SESSION["lower_price"] ?> €" id="from" name="from" type="text" class="validate" style="color:white;width:30%;">
+                
+            </div>
+            <?php 
+                    
+                    $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description,support FROM products ORDER BY price DESC limit 1");
+                    $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description,$system);
+                    $connect->execute();
+                    while($connect ->fetch()){
+                        if(isset($_SESSION["hight_price"])){
+
+                        }
+                        else{
+                            $_SESSION["hight_price"] = $price;
+                        }
+                    }
+            ?>
+            <div class="input-field col s6" style="margin-top:1%;margin-left:-6vh">
+                <h6 style="color:white;">To</h6>
+                <input value="<?php echo $_SESSION["hight_price"] ?> €" id="to" name="to" type="text" class="validate" style="color:white;width:30%;">
+            </div>
+            <div class="col s6">
+                
+                    <input type='hidden' name='filter'>
+                    <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-left:7vh">Find</button>
+                
+
+            </div>
+            </form>
+            <div class="col s12">
+                <div class="profile_line"></div>
+            </div>
+
+        </div>
+        
+    </div>
+    
     <?php 
             if($sort == ""){
-                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY id DESC");
-                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description,support FROM products ORDER BY id DESC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description,$system);
                 $connect->execute();
                 
             }
             else if($sort =="low_price"){
-                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY price ASC");
-                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description,support FROM products ORDER BY price ASC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description,$system);
                 $connect->execute();
             }
 
             else if($sort =="high_price"){
-                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY price DESC");
-                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description,support FROM products ORDER BY price DESC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description,$system);
                 $connect->execute();
             }
             else if($sort=="asc"){
-                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY product_name ASC");
-                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description,support FROM products ORDER BY product_name ASC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description,$system);
                 $connect->execute();
             }
             else if($sort =="desc"){
-                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description FROM products ORDER BY product_name DESC");
-                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description);
+                $connect=$sql_connection->prepare("SELECT id, product_name,price,img,short_description,description,support FROM products ORDER BY product_name DESC");
+                $connect->bind_result($id, $product_name,$price ,$img, $short_desc ,$description,$system);
                 $connect->execute();
             }
             while($connect ->fetch()):
-            
+                $low = $_SESSION['lower_price'];
+                $hight = $_SESSION['hight_price'];
+            if($price <= $hight && $price >= $low){
+        
     ?>
     <div class="container row product z-depth-5">
         <a class="modal-trigger" href="#modal<?php echo $id?>">
@@ -131,7 +198,21 @@ else{
     <div id="modal<?php echo $id?>" class="modal">
         <div class="modal-content">
             <h4><?php echo $product_name ?> - Qwerty</h4>
-            <p><?php echo $description ?></p>
+            <h6><?php echo $description?></h6>
+            <br>
+            
+            <p>
+            Supported Systems:
+                    <?php 
+                        $myRes = explode(',', $system );
+                        for($i = 0; $i < count($myRes); $i++){
+                            echo $myRes[$i];
+                            echo ',';
+                        }
+                    ?>
+                    
+                    </p> 
+            <p>
             <h5 class="product_price" style="text-align:center;"><?php echo $price * 7 ?>€ for 7 days | <?php echo $price * 30 ?>€ for 30 days | <?php echo $price * 360 ?>€ for 360 days</h5>
             <form id="task-form" class="form" action="products" method="post" enctype="multipart/form-data" autocomplete="off">
             <div class="option-group">
@@ -195,6 +276,10 @@ else{
     </div>
 
     <?php 
+            }
+            else{
+                
+            }
         endwhile;
     ?>
 

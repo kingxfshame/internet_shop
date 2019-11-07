@@ -2,3 +2,11 @@
 .select-dropdown.dropdown-trigger{
     color:white;
 }
+.sortcontainer{
+    position:absolute;
+    margin-left:-70vh;
+    border: 1px;
+}
+.profile_line{
+    margin-left:-70vh;
+}
