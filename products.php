@@ -2,8 +2,13 @@
 $option1 = 1;
 $option2 = 100;
 $option3 = 1000;
+
 require('php/database.php') ;
 session_start();
+$_SESSION["windows10"] = "checked";
+$_SESSION["windows7"] = "checked";
+$_SESSION["linux"] = "checked";
+$_SESSION["macos"] = "checked";
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $date_cheat = $_POST ['options'];
     $dannie = explode(',', $date_cheat );
@@ -47,6 +52,33 @@ if(isset($_REQUEST['filter'])){
     if($hight < 0) $hight = 100;
     $_SESSION["lower_price"] = $low;
     $_SESSION["hight_price"] = $hight;
+	if(isset($_REQUEST['Windows10'])){
+		$_SESSION["windows10"] = "checked";
+	}
+	else{
+		$_SESSION["windows10"] = "";
+	}
+	
+	if(isset($_REQUEST['Windows7'])){
+		$_SESSION["windows7"] = "checked";
+	}
+	else{
+		$_SESSION["windows7"] = "";
+	}
+	
+	if(isset($_REQUEST['Linux'])){
+		$_SESSION["linux"] = "checked";
+	}
+	else{
+		$_SESSION["linux"] = "";
+	}
+	
+	if(isset($_REQUEST['MacOs'])){
+		$_SESSION["macos"] = "checked";
+	}
+	else{
+		$_SESSION["macos"] = "";
+	}
 }
 
 ?>
@@ -98,7 +130,7 @@ if(isset($_REQUEST['filter'])){
             <form id="filter" action="products" enctype="multipart/form-data" autocomplete="off">
             <div class="input-field col s6" style="margin-top:1%;">
                 <h6 style="color:white;">From</h6>
-                <input value="<?php echo $_SESSION["lower_price"] ?> €" id="from" name="from" type="text" class="validate" style="color:white;width:30%;">
+                <input value="<?php echo $_SESSION["lower_price"] ?>" id="from" name="from" type="text" class="validate" style="color:white;width:30%;">
                 
             </div>
             <?php 
@@ -117,19 +149,50 @@ if(isset($_REQUEST['filter'])){
             ?>
             <div class="input-field col s6" style="margin-top:1%;margin-left:-6vh">
                 <h6 style="color:white;">To</h6>
-                <input value="<?php echo $_SESSION["hight_price"] ?> €" id="to" name="to" type="text" class="validate" style="color:white;width:30%;">
+                <input value="<?php echo $_SESSION["hight_price"] ?> " id="to" name="to" type="text" class="validate" style="color:white;width:30%;">
             </div>
-            <div class="col s6">
+			<div class="col s12">
+                <div class="profile_line"></div>
+            </div>
+			<div class="col s6" style="margin-left:-40vh">
+			    <p>
+				  <label>
+					<input type="checkbox" <?php echo $_SESSION["windows10"]; ?> name="Windows10"/>
+					<span style="color:white;">Windows 10</span>
+				  </label>
+				</p>
+				<p>
+				  <label>
+					<input type="checkbox" name="Windows7" <?php echo $_SESSION["windows7"]; ?> />
+					<span style="color:white;">Windows 7</span>
+				  </label>
+				</p>
+				<p>
+				  <label>
+					<input type="checkbox" name="Linux" <?php echo $_SESSION["linux"]; ?> />
+					<span style="color:white;">Linux</span>
+				  </label>
+				</p>
+				<p>
+				  <label>
+					<input type="checkbox" name="MacOs" <?php echo $_SESSION["macos"]; ?> />
+					<span style="color:white;">Mac OS</span>
+				  </label>
+				</p>
+			</div>
+			<div class="col s12">
+                <div class="profile_line"></div>
+            </div>
+			
+			<div class="col s6">
                 
                     <input type='hidden' name='filter'>
-                    <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-left:7vh">Find</button>
+                    <button class="btn waves-effect waves-light" type="submit" name="action" style="margin-left:6vh;margin-top:15vh">Find</button>
                 
 
             </div>
             </form>
-            <div class="col s12">
-                <div class="profile_line"></div>
-            </div>
+
 
         </div>
         
@@ -167,7 +230,51 @@ if(isset($_REQUEST['filter'])){
                 $low = $_SESSION['lower_price'];
                 $hight = $_SESSION['hight_price'];
             if($price <= $hight && $price >= $low){
-        
+				
+				$systemcheck = 0;
+				
+				$myRes = explode(',', $system );
+                    for($i = 0; $i < count($myRes); $i++){
+						$systemcheck = 0;
+						if($_SESSION["windows10"] == "checked"){
+							if($myRes[$i] == "Windows 10"){
+								$systemcheck = 1 ;
+							}
+							else{
+								
+							}
+						}
+						if($_SESSION["linux"] == "checked"){
+							if($myRes[$i] == "Linux"){
+								$systemcheck = 1;
+							}
+							else{
+								
+							}
+						}
+						if($_SESSION["windows7"] == "checked"){
+							if($myRes[$i] == "Windows 7"){
+								$systemcheck = 1;
+							}
+							else{
+								
+							}
+						}
+						
+
+						
+						if($_SESSION["macos"] == "checked"){
+							if($myRes[$i] == "Mac OS"){
+								$systemcheck = 1;
+							}
+							else{
+								
+							}
+						}
+						
+                        
+                     if($systemcheck == 1){
+			
     ?>
     <div class="container row product z-depth-5">
         <a class="modal-trigger" href="#modal<?php echo $id?>">
@@ -276,6 +383,8 @@ if(isset($_REQUEST['filter'])){
     </div>
 
     <?php 
+					 }
+				}
             }
             else{
                 
