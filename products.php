@@ -61,7 +61,8 @@ if(isset($_REQUEST['filter'])){
     <link rel="stylesheet/less" type="text/css" href="css/style.less" />
     <title>Qwerty MultiHack - Products</title>
 </head>
-<body>
+<body style="height: 100%;">
+	<div id="containerr" style="min-height: 100vh; overflow: hidden; display: block; position: relative; padding-bottom: 300px;">
     <?php require('php/navbar.php') ?>
     <div class="container">
 
@@ -284,8 +285,11 @@ if(isset($_REQUEST['filter'])){
     ?>
 
 
-
-    <?php require('php/footer.php') ?>
+	<div style="position: absolute; bottom: 0; width: 100%;">
+		<?php require('php/footer.php') ?>
+	</div>
+	</div>
+	
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
     <script src="js/epmrgo.js" type="text/javascript"></script>
     <script>
@@ -293,5 +297,7 @@ if(isset($_REQUEST['filter'])){
         $('.dropdown-trigger').dropdown();
   });
     </script>
+	
+	
 </body>
 </html>
